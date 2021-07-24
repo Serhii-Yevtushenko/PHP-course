@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: http://front.level2.syu");
+header("Access-Control-Allow-Origin: http://frontv3.level2.syu");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header("Access-Control-Allow-Methods: PUT, DELETE");

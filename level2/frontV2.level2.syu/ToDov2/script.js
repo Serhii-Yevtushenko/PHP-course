@@ -39,8 +39,8 @@ Vue.component("task", {
 	`
 });
 
-const url = "http://back.level2.syu/api/v3/router.php?action=";
-const site = "http://front.level2.syu/LoginToDo/login.html";
+const url = "http://back.level2.syu/api/v2/";
+const site = "http://frontv2.level2.syu/LoginToDo/login.html";
 let vue = new Vue({
 	el: '#app',
 	data: {
@@ -56,7 +56,7 @@ let vue = new Vue({
 	},
 	methods: {
 		getItems: function(){
-			fetch(url + 'getItems', {credentials: 'include'})
+			fetch(url + 'getItems.php', {credentials: 'include'})
 				.then(res => res.json())
 				.then((response) => {
 					this.items = response.items.map((item) => {
@@ -67,7 +67,7 @@ let vue = new Vue({
 		},
 		getDelete: function(index){
 			let request = JSON.stringify({id: index, });
-			fetch(url + 'deleteItem', {
+			fetch(url + 'deleteItem.php', {
 				method: 'DELETE',
 				body: request,
 				credentials: 'include',
@@ -85,7 +85,7 @@ let vue = new Vue({
 		},
 		getPost: function(){
 			let request = JSON.stringify({text: this.new_task.text});
-			fetch(url + 'addItem', {
+			fetch(url + 'addItem.php', {
 				method: 'POST',
 				body: request,
 				credentials: 'include',
@@ -94,7 +94,7 @@ let vue = new Vue({
 				},
 			}).then(res => res.json())
 				.then((response) => {
-					if (response.id >= 0) {
+					if (response.id) {
 						this.getItems();
 						this.new_task.text = '';
 					} else {
@@ -104,7 +104,7 @@ let vue = new Vue({
 		},
 		getPut: function(index, id){
 			let request = JSON.stringify({text: this.items[index].text, id: id,  checked: this.items[index].checked});
-			fetch(url + 'changeItem', {
+			fetch(url + 'changeItem.php', {
 				method: 'PUT',
 				body: request,
 				credentials: 'include',
@@ -144,7 +144,7 @@ let vue = new Vue({
 			this.items[index].inputedit = '';
 		},
 		exit(){
-			fetch(url + 'logout', {
+			fetch(url + 'logout.php', {
 				method: 'POST',
 				credentials: 'include',
 			}).then(res => res.json())
