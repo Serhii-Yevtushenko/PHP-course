@@ -1,16 +1,14 @@
 <?php
-$user = $_COOKIE['userID'];
-if ($user === '') {
-	throw new Exception('The session has ended. Please login again.');
-}
+header("Access-Control-Allow-Credentials: true");
+include 'checkSession.php';
+/* Deletes the entry. */
 $todoID = $body_query['id'];
-
 $stmt = $database->prepare("
 	DELETE FROM `tododatabase`.`todolist`
 	WHERE `todoID` = ?
 ");
 if($stmt->execute([$todoID]) === FALSE) {
-	throw new Exception('Database error.');
+    throw new Exception('Database error.');
 }
-header("Access-Control-Allow-Credentials: true");
+/* Output. */
 echo(json_encode(['ok' => true]));
